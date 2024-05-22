@@ -1,0 +1,9 @@
+.form_container {
+    display: flex;
+    max-width: 50%;
+    width: 50%;
+}
+
+.form {
+    width: 100%;
+}
