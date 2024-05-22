@@ -1,9 +1,21 @@
 .form_container {
     display: flex;
-    max-width: 50%;
-    width: 50%;
+    flex-direction: column;
 }
 
 .form {
     width: 100%;
+}
+
+
+.footerButtons {
+    background-color: white;
+    align-items: center;
+    display: flex;
+    height: 70px;
+    border-radius: 10px;
+}
+
+.footerButtonsItems {
+    margin-left: 15px;
 }

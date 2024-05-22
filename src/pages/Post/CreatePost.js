@@ -31,7 +31,7 @@ function CreatePost() {
     return (
         <>
             {contextHolder}
-            <PostForm onCreate={handleCreate} />
+            <PostForm onSubmit={handleCreate} />
         </>
     )
 

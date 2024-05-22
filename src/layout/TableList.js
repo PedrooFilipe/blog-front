@@ -1,8 +1,8 @@
-import { Button, Space, Table } from "antd";
+import { Breadcrumb, Button, Flex, Space, Table } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function TableList({ pathUrl, records, columns }) {
+function TableList({ records, columns, handleOkModal }) {
 
     const navigate = useNavigate();
 
@@ -11,11 +11,11 @@ function TableList({ pathUrl, records, columns }) {
     }
 
     function handleEdit(record) {
-         navigate(`edit/${record.id}`)
+        navigate(`edit/${record.id}`)
     }
 
     function handleDelete(record) {
-        console.log(`Excluindo ${pathUrl}`);
+        handleOkModal(record)
     }
 
     const defaultColumn = {
@@ -31,12 +31,25 @@ function TableList({ pathUrl, records, columns }) {
 
     columns.push(defaultColumn);
 
+    const itemsBreadCrumb = [
+        {
+            title: 'Home',
+        },
+        {
+            title: 'Notícias',
+        },
+        {
+            title: 'Listagem',
+        }
+    ]
+
     return (
         <>
-            <div>
-                <Button onClick={() => handleCreate()}>Cadastrar</Button>
-            </div>
-            <Table dataSource={records} columns={columns}></Table>
+            <Flex style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <Breadcrumb items={itemsBreadCrumb} />
+                <Button type="primary" onClick={() => handleCreate()}>Cadastrar</Button>
+            </Flex>
+            <Table dataSource={records} columns={columns} style={{ marginTop: '20px' }} />
         </>
     )
 }

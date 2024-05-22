@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Form, Input, Select, Checkbox, Button, Switch, Flex, message, Upload } from "antd";
+import { Form, Input, Select, Checkbox, Button, Switch, Flex, message, Upload, Layout } from "antd";
 import styles from './PostForm.module.css';
 import { useNavigate } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
+import JoditEditor from "jodit-react";
 
 
-function PostForm({ postParam, onCreate }) {
+function PostForm({ postParam, onSubmit }) {
 
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
@@ -20,14 +21,18 @@ function PostForm({ postParam, onCreate }) {
         }
     }, [])
 
-    console.log(post)
-
     function onChange(e) {
+        console.log(e)
         setPost({ ...post, [e.target.name]: e.target.value })
     }
 
     function onChangeSelect(item) {
         setPost({ ...post, categoryId: item })
+    };
+
+    function onChangeEditor(item) {
+        console.log(item)
+        setPost({ ...post, bodyText: item })
     };
 
     function onChangeSwitch(checked) {
@@ -69,48 +74,55 @@ function PostForm({ postParam, onCreate }) {
         navigate('/posts');
     }
 
-    function handleCreate() {
-        onCreate(post).then((res) => console.log(res)).catch(error => console.log(error))
+    function handleSubmit() {
+        onSubmit(post).then((res) => console.log(res)).catch(error => console.log(error))
     }
 
     return (
         <>
             <div className={styles.form_container}>
-                <Form className={styles.form} layout="vertical" onFinish={() => handleCreate()}>
-                    <Form.Item label="Título" rules={[
-                        {
-                            required: true,
-                        },
-                    ]}>
-                        <Input name="title" autoComplete="false" onChange={onChange} value={post.title} />
-                    </Form.Item>
-                    <Form.Item label="Subtitulo">
-                        <Input name="subtitle" autoComplete="false" onChange={onChange} value={post.subtitle} />
-                    </Form.Item>
-                    <Form.Item label="Slug">
-                        <Input name="slug" autoComplete="false" onChange={onChange} value={post.slug} />
-                    </Form.Item>
-                    <Form.Item label="Categoria">
-                        <Select onChange={onChangeSelect} options={options} value={post.categoryId} />
-                    </Form.Item>
-                    <Form.Item label="Destaque?">
-                        <Switch onChange={onChangeSwitch} defaultValue={post.isHighLight} />
-                    </Form.Item>
-                    <Form.Item label="Corpo da notícia">
-                        <TextArea name="bodyText" rows={6} onChange={onChange} value={post.bodyText}/>
-                    </Form.Item>
+                <Form className={styles.form} layout="vertical" onFinish={() => handleSubmit()}>
 
+                    <Flex style={{ flexDirection: 'row', gap: '20px' }}>
+                        <Form.Item label="Título" style={{ width: '50%' }}>
+                            <Input name="title" autoComplete="false" onChange={onChange} value={post.title} />
+                        </Form.Item>
+                        <Form.Item label="Subtitulo" style={{ width: '50%' }}>
+                            <Input name="subtitle" autoComplete="false" onChange={onChange} value={post.subtitle} />
+                        </Form.Item>
+                    </Flex>
 
-                    <Form.Item>
-                        <Upload name="avatar" listType="picture-card" className="avatar-uploader" showUploadList={false} beforeUpload={beforeUpload} onChange={handleChangeImage}>
-                            {post.thumbNail ? (<img src={post.thumbNail} alt="avatar" style={{ width: '100%', }} />) : ('+')}
-                        </Upload>
-                    </Form.Item>
+                    <Flex style={{ flexDirection: 'row', gap: '20px' }}>
+                        <Form.Item label="Slug" style={{ width: '50%' }}>
+                            <Input name="slug" autoComplete="false" onChange={onChange} value={post.slug} />
+                        </Form.Item >
+                        <Form.Item label="Categoria" style={{ width: '40%' }}>
+                            <Select onChange={onChangeSelect} options={options} value={post.categoryId} />
+                        </Form.Item>
+                        <Form.Item label="Destaque?" style={{ width: '10%' }}>
+                            <Switch onChange={onChangeSwitch} value={post.isHighLight} />
+                        </Form.Item>
+                    </Flex>
 
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit"> Cadastrar </Button>
-                        <Button type="link" onClick={() => handleGoBack()}> Voltar </Button>
-                    </Form.Item>
+                    <Flex style={{ flexDirection: 'row', gap: '20px' }}>
+
+                        <Form.Item label="Corpo da notícia" style={{ width: '50%' }}>
+                            <JoditEditor value={post.bodyText} onChange={(item) => onChangeEditor(item)} />
+                        </Form.Item>
+
+                        <Form.Item label="Capa" style={{ width: '50%' }}>
+                            <Upload style={{ width: "100%" }} name="avatar" listType="picture-card" showUploadList={false} beforeUpload={beforeUpload} onChange={handleChangeImage}>
+                                {post.thumbNail ? (<img src={post.thumbNail} alt="avatar" width="100%" />) : ('+')}
+                            </Upload>
+                        </Form.Item>
+
+                    </Flex>
+                    <div className={styles.footerButtons}>
+                        <div className={styles.footerButtonsItems}>
+                            <Button type="primary" htmlType="submit"> {postParam ? 'Alterar' : 'Cadastrar'} </Button>
+                            <Button type="link" onClick={() => handleGoBack()}> Voltar </Button>
+                        </div>
+                    </div>
 
                 </Form>
             </div >

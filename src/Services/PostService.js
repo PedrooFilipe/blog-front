@@ -29,15 +29,22 @@ class PostService {
 
     }
 
-    async update(id, post) {
-        return await axios.put(`${this.path}/${id}`, { post }, { headers: { 'Authorization': this.token, 'Accept': this.headers } })
+    async update(post) {
+        let response = {};
+        try {
+            return await axios.put(`${this.path}/${post.id}`, post , { headers: { 'Authorization': this.token, 'Accept': this.headers } })
+        } catch (error) {
+            response = error.response;
+            console.log(response);
+        }
+        return response;
     }
 
     async show(id) {
         let response = {};
-        try{
+        try {
             response = await axios.get(`http://localhost:5041/posts/${id}`, { headers: { 'Authorization': this.token } });
-        }catch(error){
+        } catch (error) {
             response = error.response;
         }
 
@@ -45,7 +52,14 @@ class PostService {
     }
 
     async delete(id) {
-        return await axios.delete(`${this.path}/${id}`, { headers: { 'Authorization': this.token } })
+        let response = {};
+        try {
+            response = await axios.delete(`http://localhost:5041/posts/${id}`, { headers: { 'Authorization': this.token } })
+        } catch (error) {
+            response = error.response;
+        }
+
+        return response;
     }
 
 }

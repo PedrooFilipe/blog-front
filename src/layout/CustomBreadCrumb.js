@@ -4,11 +4,11 @@ import React from "react";
 function CustomBreadCrumb({itemsParam}) {
 
     const items = [
-        'Home'
+        {title: 'Home'}
     ]
 
     itemsParam.forEach(item => {
-        items.push(item);
+        items.push({title: item});
     });
 
     return (

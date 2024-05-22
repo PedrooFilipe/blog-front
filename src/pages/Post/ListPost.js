@@ -3,7 +3,7 @@ import TableList from "../../layout/TableList";
 import CustomBreadCrumb from "../../layout/CustomBreadCrumb";
 import PostService from "../../Services/PostService";
 import { useLocation } from 'react-router-dom';
-import { notification } from "antd";
+import { Modal, notification } from "antd";
 
 function ListPost() {
 
@@ -43,6 +43,12 @@ function ListPost() {
             title: "Titulo",
             key: "title",
             dataIndex: "title"
+        },
+        {
+            title: "Publicado",
+            key: "published",
+            dataIndex: "published",
+            render: (_, record) => record.published ? 'Sim' : 'Não'
         }
     ];
 
@@ -51,13 +57,25 @@ function ListPost() {
         'Listagem'
     ];
 
+    function handleOkModal(record) {
+        Modal.confirm({
+            title: 'Deseja excluir o registro?',
+            onOk: async () => {
+                const response = await postService.delete(record.id);
+                console.log(response);
+                getData();
+                openNotification();
+            }
+        })
+    }
+
 
     return (
         <>
             {contextHolder}
-            <CustomBreadCrumb itemsParam={breadCrumbItems} />
+            {/* <CustomBreadCrumb itemsParam={breadCrumbItems} /> */}
 
-            <TableList pathUrl={'posts'} records={posts} columns={columns}></TableList>
+            <TableList pathUrl={'posts'} records={posts} columns={columns} handleOkModal={handleOkModal}></TableList>
         </>
     )
 
