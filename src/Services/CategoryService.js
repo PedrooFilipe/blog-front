@@ -1,15 +1,15 @@
 import axios from "axios";
 
-class PostService {
+class CategoryService {
 
-    path = "http://localhost:5041/posts";
+    path = "http://localhost:5041/categories";
     token = "Bearer token";
     headers = { 'Accept': 'application/json' }
     authToken = "";
 
-    constructor(authToken) {
-        this.authToken = authToken;
-    }
+    // constructor(authToken) {
+    //     this.authToken = authToken;
+    // }
 
     async createAsync(post) {
         let response = {};
@@ -26,9 +26,8 @@ class PostService {
 
         let response = {};
         try {
-            response = await axios.get('http://localhost:5041/posts', {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjExIiwiZXhwIjoxNzIxNTI3NjQ5fQ.mgMAkDKnGp8ELePX8JdGgcMAbdYQVFQJJD-LL7ZihDU'}})
+            response = await axios.get('http://localhost:5041/categories', {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjExIiwiZXhwIjoxNzIxNTI3NjQ5fQ.mgMAkDKnGp8ELePX8JdGgcMAbdYQVFQJJD-LL7ZihDU'}})
         } catch (error) {
-            console.log('deu erro');
             response = error.response;
         }
         return response;
@@ -60,7 +59,7 @@ class PostService {
     async delete(id) {
         let response = {};
         try {
-            response = await axios.delete(`http://localhost:5041/posts/${id}`, { headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjExIiwiZXhwIjoxNzIxNTI3NjQ5fQ.mgMAkDKnGp8ELePX8JdGgcMAbdYQVFQJJD-LL7ZihDU' } })
+            response = await axios.delete(`http://localhost:5041/posts/${id}`, { headers: { 'Authorization': this.token } })
         } catch (error) {
             response = error.response;
         }
@@ -70,4 +69,4 @@ class PostService {
 
 }
 
-export default PostService;
+export default CategoryService;

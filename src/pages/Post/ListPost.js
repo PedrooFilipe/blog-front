@@ -4,13 +4,15 @@ import CustomBreadCrumb from "../../layout/CustomBreadCrumb";
 import PostService from "../../Services/PostService";
 import { useLocation } from 'react-router-dom';
 import { Modal, notification } from "antd";
+import useAuth from "../../hooks/UseAuth";
 
 function ListPost() {
 
-    const postService = new PostService();
+    const postService = new PostService(sessionStorage.getItem('authorizationToken'));
     const [posts, setPosts] = useState([]);
     const location = useLocation();
     const [api, contextHolder] = notification.useNotification();
+    const auth = useAuth();
 
     useEffect(() => {
         if (location.state) {
@@ -33,7 +35,7 @@ function ListPost() {
         const response = await postService.list()
 
         if (response.status) {
-            setPosts(response.data);
+            setPosts(response.data.data);
         }
     }
 
@@ -62,7 +64,6 @@ function ListPost() {
             title: 'Deseja excluir o registro?',
             onOk: async () => {
                 const response = await postService.delete(record.id);
-                console.log(response);
                 getData();
                 openNotification();
             }

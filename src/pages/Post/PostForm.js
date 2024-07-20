@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Select, Checkbox, Button, Switch, Flex, message, Upload, Layout } from "antd";
 import styles from './PostForm.module.css';
 import { useNavigate } from "react-router-dom";
-import TextArea from "antd/es/input/TextArea";
 import JoditEditor from "jodit-react";
 
 
@@ -11,7 +10,6 @@ function PostForm({ postParam, onSubmit }) {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [post, setPost] = useState({})
-    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {

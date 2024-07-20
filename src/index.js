@@ -6,20 +6,33 @@ import reportWebVitals from './reportWebVitals';
 
 import {
   createBrowserRouter,
+  redirect,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import ListPost from './pages/Post/ListPost';
 import CreatePost from './pages/Post/CreatePost';
 import EditPost from './pages/Post/EditPost';
+import Login from './pages/Login/Login';
+import ListCategory from './pages/Category/ListCategory';
+import { AuthProvider } from './contexts/AuthContext';
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: '/',
+    element: 
+    <AuthProvider>
+      <App />
+    </AuthProvider>,
     children: [
       {
         path: '/posts',
-        element: <ListPost />
+        element:
+          <ListPost />
       },
       {
         path: '/posts/create',
@@ -29,6 +42,20 @@ const router = createBrowserRouter([
         path: '/posts/edit/:id',
         element: <EditPost />
       },
+
+      {
+        path: '/categories',
+        element:
+          <ListCategory />
+      }
+      // {
+      //   path: '/posts/create',
+      //   element: <CreatePost />
+      // },
+      // {
+      //   path: '/posts/edit/:id',
+      //   element: <EditPost />
+      // },
 
 
     ],

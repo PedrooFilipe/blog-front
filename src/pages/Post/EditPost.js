@@ -22,9 +22,9 @@ function EditPost() {
     async function onSubmit(post) {
         const response = await postService.update(post);
 
-        if (response.status == 200) {
+        if (response.status === 200) {
             navigate('/posts', { state: { message: 'Dados salvos com sucesso' } })
-        } else if (response.status == 400) {
+        } else if (response.status === 400) {
             // openNotification();
         }
     }
