@@ -26,7 +26,7 @@ class PostService {
 
         let response = {};
         try {
-            response = await axios.get('http://localhost:5041/posts', {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjExIiwiZXhwIjoxNzIxNTI3NjQ5fQ.mgMAkDKnGp8ELePX8JdGgcMAbdYQVFQJJD-LL7ZihDU'}})
+            response = await axios.get('http://localhost:5041/posts', {headers: [{'Content-Type': 'application/json' }, {'Authorization': `Bearer ${localStorage.getItem("token")}`}] })
         } catch (error) {
             console.log('deu erro');
             response = error.response;

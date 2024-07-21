@@ -1,25 +1,32 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+import AuthService from "../Services/AuthService";
 
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-    const [user, setUser] = useState({ "name": "", "isAuthenticated": false });
+    const [user, setUser] = useState({ "name": localStorage.getItem("userName"), "token": localStorage.getItem("token") });
 
-    async function login() {
-        //Enviar req para a api
-    }
+    // const login = async (email, password) => {
 
+    //     const response = await service.login(email, password);
 
-    async function logout() {
-        setUser({ ...user, isAuthenticated: false })
-    }
+    //     if (response.status) {
+    //         if (response.status == 200) {
+    //             setUser({ "name": response.data.name, "token": response.data.token, "refreshToken": response.data.refreshToken, "isAuthenticated": true })
+    //         }
+    //     }
+    // }
+
+    // async function logout() {
+    //     setUser({ ...user, isAuthenticated: false })
+    // }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user }}>
             <>
-            {user.isAuthenticated ? children : 'teste'}
+                {user.token ? children : 'teste'}
             </>
         </AuthContext.Provider>)
 

@@ -24,10 +24,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: 
-    <AuthProvider>
-      <App />
-    </AuthProvider>,
+    element:
+      <AuthProvider>
+        <App />
+      </AuthProvider>,
     children: [
       {
         path: '/posts',

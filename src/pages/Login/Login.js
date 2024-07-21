@@ -1,20 +1,24 @@
 import { Button, Form, Input } from "antd";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import AuthService from "../../Services/AuthService";
 
+
 function Login() {
-    const authService = new AuthService();
+    const service = new AuthService();
+    // const nome  = useContext(AuthContext);
     const navigate = useNavigate();
-    const [loginUser, setLoginUser] = useState({});
+    const [loginUser, setLoginUser] = useState([]);
+
+    // console.log(nome)
 
     function handleChange(e) {
-        setLoginUser({...loginUser, [e.target.name]: e.target.value})
+        setLoginUser({ ...loginUser, [e.target.name]: e.target.value })
     }
 
     useEffect(() => {
-        const token = localStorage.getItem('authorizationToken');
+        const token = localStorage.getItem('token');
 
         if (token) {
             navigate('/');
@@ -23,10 +27,11 @@ function Login() {
     }, [])
 
     async function handleSubmit() {
-        const response = await authService.Login(loginUser);
+        const response = await service.login(loginUser.email, loginUser.password);
+
         if (response.status) {
             if (response.status == 200) {
-                localStorage.setItem('authorizationToken', response.data.token);
+                localStorage.setItem('token', response.data.token);
                 navigate('/');
             }
         }
@@ -34,7 +39,7 @@ function Login() {
 
     return (
         <>
-        <Outlet />
+            <Outlet />
             <Form onFinish={handleSubmit}>
                 <Form.Item label="Email">
                     <Input name="email" onChange={handleChange} />

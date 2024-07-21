@@ -24,9 +24,23 @@ class CategoryService {
 
     async list() {
 
+        const url = 'http://localhost:5041/categories';
+        const token = localStorage.getItem('token')
+
         let response = {};
         try {
-            response = await axios.get('http://localhost:5041/categories', {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjExIiwiZXhwIjoxNzIxNTI3NjQ5fQ.mgMAkDKnGp8ELePX8JdGgcMAbdYQVFQJJD-LL7ZihDU'}})
+
+            response = await axios.get(url, {
+                headers: [
+                    {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                ]
+            })
+            // response = await axios.get('http://localhost:5041/categories', { headers: [{ 'Content-Type': 'application/json' }, { 'Authorization': `Bearer ${localStorage.getItem("token")}` }] })
         } catch (error) {
             response = error.response;
         }
@@ -37,7 +51,7 @@ class CategoryService {
     async update(post) {
         let response = {};
         try {
-            return await axios.put(`${this.path}/${post.id}`, post , { headers: { 'Authorization': this.token, 'Accept': this.headers } })
+            return await axios.put(`${this.path}/${post.id}`, post, { headers: { 'Authorization': this.token, 'Accept': this.headers } })
         } catch (error) {
             response = error.response;
             console.log(response);
