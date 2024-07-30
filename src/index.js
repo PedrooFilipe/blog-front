@@ -16,59 +16,69 @@ import EditPost from './pages/Post/EditPost';
 import Login from './pages/Login/Login';
 import ListCategory from './pages/Category/ListCategory';
 import { AuthProvider } from './contexts/AuthContext';
+import CreateCategory from './pages/Category/CreateCategory';
+import PrivateRoute from './Config/PrivateRoute';
 
-const router = createBrowserRouter([
-  {
-    path: "/login",
-    element: <Login />
-  },
-  {
-    path: '/',
-    element:
-      <AuthProvider>
-        <App />
-      </AuthProvider>,
-    children: [
-      {
-        path: '/posts',
-        element:
-          <ListPost />
-      },
-      {
-        path: '/posts/create',
-        element: <CreatePost />
-      },
-      {
-        path: '/posts/edit/:id',
-        element: <EditPost />
-      },
-
-      {
-        path: '/categories',
-        element:
-          <ListCategory />
-      }
-      // {
-      //   path: '/posts/create',
-      //   element: <CreatePost />
-      // },
-      // {
-      //   path: '/posts/edit/:id',
-      //   element: <EditPost />
-      // },
+const router = createBrowserRouter(
 
 
-    ],
+  [
+    {
+      path: "/login",
+      element:
+        <AuthProvider>
+          <Login />
+        </AuthProvider>
+    },
+    {
+      path: '/',
+      element:
+        <AuthProvider>
+          <PrivateRoute>
+            <App />
+          </PrivateRoute>
+        </AuthProvider>,
+      children: [
+        {
+          path: '/posts',
+          element:
+            <ListPost />
+        },
+        {
+          path: '/posts/create',
+          element: <CreatePost />
+        },
+        {
+          path: '/posts/edit/:id',
+          element: <EditPost />
+        },
 
-  },
-]);
+        {
+          path: '/categories',
+          element:
+            <ListCategory />
+        },
+        {
+          path: '/categories/create',
+          element: <CreateCategory />
+        },
+        // {
+        //   path: '/posts/edit/:id',
+        //   element: <EditPost />
+        // },
+
+
+      ],
+
+    },
+  ]);
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-  <RouterProvider router={router} />
+    <RouterProvider router={router} />
   // </React.StrictMode>
 );
 

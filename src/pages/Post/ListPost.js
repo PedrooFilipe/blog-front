@@ -4,7 +4,6 @@ import CustomBreadCrumb from "../../layout/CustomBreadCrumb";
 import PostService from "../../Services/PostService";
 import { useLocation } from 'react-router-dom';
 import { Modal, notification } from "antd";
-import useAuth from "../../hooks/UseAuth";
 
 function ListPost() {
 
@@ -12,7 +11,6 @@ function ListPost() {
     const [posts, setPosts] = useState([]);
     const location = useLocation();
     const [api, contextHolder] = notification.useNotification();
-    const auth = useAuth();
 
     useEffect(() => {
         if (location.state) {
@@ -21,6 +19,7 @@ function ListPost() {
         }
         getData();
 
+        console.log('teste')
 
     }, [])
 

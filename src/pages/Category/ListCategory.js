@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from "react";
-import CategoryService from "../../Services/CategoryService";
 import TableList from "../../layout/TableList";
 import { Modal, notification } from "antd";
+import { request } from "../../Services/api";
 
 
 function ListCategory() {
-
-    const service = new CategoryService();
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-
         getData();
-    });
+    }, []);
 
 
     async function getData() {
-        const response = await service.list()
+        const response = await request({ url: "categories" })
 
-        if (response.status) {
-            setCategories(response.data.data);
-        }
-    } 
+        setCategories(response.data);
+    }
 
     function handleOkModal(record) {
         Modal.confirm({
             title: 'Deseja excluir o registro?',
             onOk: async () => {
-                const response = await service.delete(record.id);
+                const response = await request({url: 'categories', method: 'delete', queryParams: record.id});
                 getData();
                 // openNotification();
             }
