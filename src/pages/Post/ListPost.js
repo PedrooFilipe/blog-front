@@ -53,10 +53,6 @@ function ListPost() {
         }
     ];
 
-    const breadCrumbItems = [
-        'Notícias',
-        'Listagem'
-    ];
 
     function handleOkModal(record) {
         Modal.confirm({
@@ -70,12 +66,20 @@ function ListPost() {
     }
 
 
+    const breadCrumbItems = [{
+        name: 'Notícias'
+    },
+    {
+        name: 'Listagem'
+    }]
+
+
     return (
         <>
             {contextHolder}
             {/* <CustomBreadCrumb itemsParam={breadCrumbItems} /> */}
 
-            <TableList pathUrl={'posts'} records={posts} columns={columns} handleOkModal={handleOkModal}></TableList>
+            <TableList pathUrl={'posts'} records={posts} columns={columns} handleOkModal={handleOkModal} breadCrumbItems={breadCrumbItems} ></TableList>
         </>
     )
 

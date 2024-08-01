@@ -2,7 +2,7 @@ import { Breadcrumb, Button, Flex, Space, Table } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function TableList({ records, columns, handleOkModal }) {
+function TableList({ records, columns, handleOkModal, breadCrumbItems }) {
 
     const navigate = useNavigate();
 
@@ -34,14 +34,12 @@ function TableList({ records, columns, handleOkModal }) {
     const itemsBreadCrumb = [
         {
             title: 'Home',
-        },
-        {
-            title: 'Notícias',
-        },
-        {
-            title: 'Listagem',
         }
     ]
+
+    breadCrumbItems.forEach((item) => {
+        itemsBreadCrumb.push({ title: item.name })
+    });
 
     return (
         <>

@@ -15,7 +15,7 @@ function ListCategory() {
     async function getData() {
         const response = await request({ url: "categories" })
 
-        setCategories(response.data);
+        setCategories(response.data.data);
     }
 
     function handleOkModal(record) {
@@ -48,11 +48,18 @@ function ListCategory() {
         },
     ];
 
+    const breadCrumbItems = [{
+        name: 'Categorias'
+    },
+    {
+        name: 'Listagem'
+    }]
+
     return (
         <>
             {/* {contextHolder} */}
 
-            <TableList pathUrl={'categories'} records={categories} columns={columns} handleOkModal={handleOkModal}></TableList>
+            <TableList pathUrl={'categories'} records={categories} columns={columns} handleOkModal={handleOkModal} breadCrumbItems={breadCrumbItems} ></TableList>
         </>
     )
 
