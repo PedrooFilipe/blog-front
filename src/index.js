@@ -18,67 +18,16 @@ import ListCategory from './pages/Category/ListCategory';
 import { AuthProvider } from './contexts/AuthContext';
 import CreateCategory from './pages/Category/CreateCategory';
 import PrivateRoute from './Config/PrivateRoute';
-
-const router = createBrowserRouter(
-
-
-  [
-    {
-      path: "/login",
-      element:
-        <AuthProvider>
-          <Login />
-        </AuthProvider>
-    },
-    {
-      path: '/',
-      element:
-        <AuthProvider>
-          <PrivateRoute>
-            <App />
-          </PrivateRoute>
-        </AuthProvider>,
-      children: [
-        {
-          path: '/posts',
-          element:
-            <ListPost />
-        },
-        {
-          path: '/posts/create',
-          element: <CreatePost />
-        },
-        {
-          path: '/posts/edit/:id',
-          element: <EditPost />
-        },
-
-        {
-          path: '/categories',
-          element:
-            <ListCategory />
-        },
-        {
-          path: '/categories/create',
-          element: <CreateCategory />
-        },
-        // {
-        //   path: '/posts/edit/:id',
-        //   element: <EditPost />
-        // },
-
-
-      ],
-
-    },
-  ]);
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+
+
   // <React.StrictMode>
-    <RouterProvider router={router} />
+  <App />
+    //{/* // <RouterProvider router={router} /> */}
   // </React.StrictMode>
 );
 
